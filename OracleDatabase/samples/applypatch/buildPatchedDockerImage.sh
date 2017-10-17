@@ -24,7 +24,7 @@ Parameters:
 
 * select one edition only: -e or -s
 
-LICENSE CDDL 1.0 + GPL 2.0
+LICENSE UPL 1.0
 
 Copyright (c) 2014-2017 Oracle and/or its affiliates. All rights reserved.
 
@@ -43,7 +43,7 @@ fi
 # Parameters
 ENTERPRISE=0
 STANDARD=0
-VERSION="12.1.0.2"
+VERSION="12.2.0.1"
 PATCHLABEL="Patch"
 DOCKEROPS=""
 

@@ -1,19 +1,19 @@
 Oracle WebLogic Server on Docker
 =================================
-These  Docker configurations have been used to create the Oracle WebLogic Server image. Providing this WLS image facilitates the configuration, and environment setup for DevOps users. This project includes the installation and the creation of an empty WebLogic Server domain (only an Admin Server). These Oracle WebLogic Server 12.2.1.2 images are based on Oracle Linux and Oracle JDK 8 (Server).
+These  Docker configurations have been used to create the Oracle WebLogic Server image. Providing this WLS image facilitates the configuration, and environment setup for DevOps users. This project includes the installation and the creation of an empty WebLogic Server domain (only an Admin Server). These Oracle WebLogic Server 12.2.1.2 images are based on Oracle Linux and Oracle JRE 8 (Server).
 
 The certification of Oracle WebLogic Server on Docker does not require the use of any file presented in this repository. Customers and users are welcome to use them as starters, and customize/tweak, or create from scratch new scripts and Dockerfiles.
 
 For more information on the certification, please check the [Oracle WebLogic Server on Docker Certification Whitepaper](http://www.oracle.com/technetwork/middleware/weblogic/overview/weblogic-server-docker-containers-2491959.pdf) and [WebLogic Server Blog](https://blogs.oracle.com/WebLogicServer/) for updates.
 
 ## How to build and run
-This project offers sample Dockerfiles for Oracle WebLogic Server 12cR2 (12.2.1.2), and it provides at least one Dockerfile for the 'developer' distribution and a second Dockerfile for the 'generic' distribution, as well more if necessary. To assist in building the images, you can use the [buildDockerImage.sh](dockerfiles/buildDockerImage.sh) script. See below for instructions and usage.
+This project offers sample Dockerfiles for Oracle WebLogic Server 12cR2 (12.2.1.2), and it provides at least one Dockerfile for the 'developer' distribution, a second Dockerfile for the 'generic' distribution, and a third Dockerfile for the 'infrastructure' distribution. To assist in building the images, you can use the [buildDockerImage.sh](dockerfiles/buildDockerImage.sh) script. See below for instructions and usage.
 
 The `buildDockerImage.sh` script is just a utility shell script that performs MD5 checks and is an easy way for beginners to get started. Expert users are welcome to directly call `docker build` with their prefered set of parameters.
 
 
 ### Building Oracle WebLogic Server Docker Install Images
-**IMPORTANT:** you have to download the binary of Oracle WebLogic Server and put it in place (see `.download` files inside dockerfiles/<version>).
+**IMPORTANT:** you have to download the binary of Oracle WebLogic Server and put it in place (see `.download` files inside dockerfiles/<version>). The WebLogic image extends the Oracle JRE Server 8 image, you must either build the image by using the Dockerfile in [../../../OracleJava/java8](https://github.com/oracle/docker-images/tree/master/OracleJava/java-8) or pull the latest image from the [Oracle Cointainer Registry](https://container-registry.oracle.com) or the [Docker Store](https://store.docker.com).
 
 Before you build, choose which version and distribution you want to build an image,then download the required packages (see .download files) and drop them in the folder of your distribution version of choice. Then go into the **dockerfiles** folder and run the **buildDockerImage.sh** script as root.
 
@@ -32,7 +32,7 @@ Before you build, choose which version and distribution you want to build an ima
         
         * select one distribution only: -d, -g, or -i
         
-        LICENSE CDDL 1.0 + GPL 2.0
+        LICENSE UPL 1.0
         
         Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
 
@@ -80,8 +80,17 @@ To try a sample of a WebLogic Server image with a base domain configured, follow
         $ docker images
 
   3. Start a container from the image created in step 1: 
+     You can override the default values of the following parameters during runtime with the -e option:
+      * ADMIN_NAME     (default: AdminServer) 
+      * ADMIN_PORT     (default: 7001) 
+      * ADMIN_USERNAME (default: weblogic)
+      * ADMIN_PASSWORD (default: Auto Generated)
+      * DOMAIN_NAME    (default: base_domain)
+      * DOMAIN_HOME    (default: /u01/oracle/user_projects/domains/base_domain)
 
-        $ docker run -d oracle/weblogic:12.2.1.2-developer
+**NOTE** To set the DOMAIN_NAME, you must set both DOMAIN_NAME and DOMAIN_HOME.
+
+        $ docker run -d -e ADMIN_USERNAME=weblogic -e ADMIN_PASSWORD=welcome1 -e DOMAIN_HOME=/u01/oracle/user_projects/domains/abc_domain -e DOMAIN_NAME=abc_domain oracle/weblogic:12.2.1.2-developer
 
   4. Run the administration console
 
@@ -109,7 +118,7 @@ To download and run Oracle WebLogic Server 12c Distribution regardless of inside
 
 To download and run Oracle JDK regardless of inside or outside a Docker container, you must download the binary from Oracle website and accept the license indicated at that pge.
 
-All scripts and files hosted in this project and GitHub [docker/OracleWebLogic](./) repository required to build the Docker images are, unless otherwise noted, released under the Common Development and Distribution License (CDDL) 1.0 and GNU Public License 2.0 licenses.
+All scripts and files hosted in this project and GitHub [docker/OracleWebLogic](./) repository required to build the Docker images are, unless otherwise noted, released under [UPL 1.0](https://oss.oracle.com/licenses/upl/) license.
 
 ## Copyright
-Copyright (c) 2014-2016 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2014-2017 Oracle and/or its affiliates. All rights reserved.

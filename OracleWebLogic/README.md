@@ -9,7 +9,7 @@ For more information on the certification, please check the [WebLogic on Docker 
 For pre-built images containing Oracle software, please check the [Oracle Container Registry](https://container-registry.oracle.com).
 
 ## How to build and run
-This project offers sample Dockerfiles for WebLogic 12cR2 (12.2.1.x) and WebLogic 12c (12.1.3), and for each version it also provides at least one Dockerfile for the 'developer' distribution and a second Dockerfile for the 'generic' distribution, as well more if necessary. To assist in building the images, you can use the [buildDockerImage.sh](dockerfiles/buildDockerImage.sh) script. See below for instructions and usage.
+This project offers sample Dockerfiles for WebLogic 12cR2 (12.2.1.x) and WebLogic 12c (12.1.3), and for each version it also provides at least one Dockerfile for the 'developer' distribution, a second Dockerfile for the 'generic' distribution, and a third Dockerfile for the 'infrastructure' distribution. To assist in building the images, you can use the [buildDockerImage.sh](dockerfiles/buildDockerImage.sh) script. See below for instructions and usage.
 
 The `buildDockerImage.sh` script is just a utility shell script that performs MD5 checks and is an easy way for beginners to get started. Expert users are welcome to directly call `docker build` with their prefered set of parameters.
 
@@ -39,7 +39,7 @@ Before you build, choose which version and distribution you want to build an ima
         
         * select one distribution only: -d, -g, or -i
         
-        LICENSE CDDL 1.0 + GPL 2.0
+        LICENSE UPL 1.0
         
         Copyright (c) 2014-2015 Oracle and/or its affiliates. All rights reserved.
 
@@ -148,7 +148,7 @@ To download and run WebLogic 12c Distribution regardless of inside or outside a 
 
 To download and run Oracle JDK regardless of inside or outside a Docker container, you must download the binary from Oracle website and accept the license indicated at that pge.
 
-All scripts and files hosted in this project and GitHub [docker/OracleWebLogic](./) repository required to build the Docker images are, unless otherwise noted, released under the Common Development and Distribution License (CDDL) 1.0 and GNU Public License 2.0 licenses.
+All scripts and files hosted in this project and GitHub [docker/OracleWebLogic](./) repository required to build the Docker images are, unless otherwise noted, released under [UPL 1.0](https://oss.oracle.com/licenses/upl/) license.
 
 ## Copyright
-Copyright (c) 2014-2016 Oracle and/or its affiliates. All rights reserved.
+Copyright (c) 2014-2017 Oracle and/or its affiliates. All rights reserved.

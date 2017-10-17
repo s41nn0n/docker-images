@@ -1,24 +1,36 @@
 # Docker Images from Oracle
 
-This repository stores Dockerfiles and samples to build Docker images for Oracle products and Open Source projects.
+This repository contains Dockerfiles and samples to build Docker images for Oracle products and open source projects.
 
- - [Oracle Coherence](./OracleCoherence)
- - [Oracle Database](./OracleDatabase)
- - [Oracle Java](./OracleJava)
- - [Oracle HTTP Server](./OracleHTTPServer)
- - [Oracle Tuxedo](./OracleTuxedo)
- - [Oracle WebLogic](./OracleWebLogic)
+ - [Oracle Coherence](https://github.com/oracle/docker-images/tree/master/OracleCoherence)
+ - [Oracle Database](https://github.com/oracle/docker-images/tree/master/OracleDatabase)
+ - [Oracle GoldenGate](https://github.com/oracle/docker-images/tree/master/OracleGoldenGate)
+ - [Oracle Java](https://github.com/oracle/docker-images/tree/master/OracleJava)
+ - [Oracle HTTP Server](https://github.com/oracle/docker-images/tree/master/OracleHTTPServer)
+ - [Oracle Tuxedo](https://github.com/oracle/docker-images/tree/master/OracleTuxedo)
+ - [Oracle TSAM Plus](https://github.com/oracle/docker-images/tree/master/OracleTSAM)
+ - [Oracle WebLogic](https://github.com/oracle/docker-images/tree/master/OracleWebLogic)
+ - [Oracle BI](https://github.com/oracle/docker-images/tree/master/OracleBI)
 
 And Open Source projects:
 
- - [GlassFish](./GlassFish)
- - [MySQL](https://github.com/mysql/mysql-docker/)
- - [NoSQL](./NoSQL)
- - [OpenJDK](./OpenJDK)
+ - [GlassFish](https://github.com/oracle/docker-images/tree/master/GlassFish)
+ - [NoSQL](https://github.com/oracle/docker-images/tree/master/NoSQL)
+ - [OpenJDK](/OpenJDK)
 
-Oracle Linux images can be found in the [`OracleLinux-images`](https://github.com/oracle/docker/tree/OracleLinux-images) branch of this repository.
+## Other images
 
-For pre-built images containing Oracle software, please check the [Oracle Container Registry](https://container-registry.oracle.com).
+ - *Oracle Linux*: check the [ol-container-images](https://github.com/oracle/ol-container-images) repository.
+ - *MySQL*: check the [mysql-docker](https://github.com/mysql/mysql-docker/) repository.
+ 
+## Pre-built Images with Commercial Software
+
+You can find them on two locations:
+
+ 1. Our own [Oracle Container Registry](https://container-registry.oracle.com) server.
+ 2. On the [Docker Store](https://store.docker.com/search?certification_status=certified&q=oracle&source=verified&type=image)
+
+## Support
 
 For support and certification information, please consult the documentation for each product.
 

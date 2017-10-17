@@ -8,7 +8,7 @@ The scripts will automatically install a newer OPatch version, if provided.
 # The patch structure
 The scripts used in this example rely on following directory structure:
 
-    12.1.0.2
+    12.2.0.1
        patches
           001 (patch directory)
              pNNNNNN_RRRRRR.zip  (patch zip file)
@@ -40,14 +40,14 @@ the patched image:
     
     Parameters:
        -v: version to build
-           Choose one of: 12.1.0.2
+           Choose one of: 12.1.0.2, 12.2.0.1
        -e: creates a patched image based on 'Enterprise Edition'
        -s: creates a patched image based on 'Standard Edition 2'
        -p: patch label to be used for the tag
     
     * select one edition only: -e or -s
     
-    LICENSE CDDL 1.0 + GPL 2.0
+    LICENSE UPL 1.0
     
     Copyright (c) 2014-2017 Oracle and/or its affiliates. All rights reserved.
 
