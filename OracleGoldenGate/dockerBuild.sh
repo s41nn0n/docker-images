@@ -19,11 +19,26 @@ if [[ "${1:--h}" == "-h" ]]; then
     echo "  docker-build-options    Command line options for Docker build"
     echo ""
     echo "Example:"
-    echo "  $(basename $0) ~/Downloads/fbo_ggs_Linux_x64_shiphome.zip --no-cache"
+    echo "  ./$(basename $0) ~/Downloads/123014_fbo_ggs_Linux_x64_services_shiphome.zip --no-cache"
     exit 1
 fi
 
-OGG_DISTFILE="$(readlink -f $1)"
+function getTargetFilename {
+    local Target="$1"
+    if [[ "$(uname)" == "Linux" ]]; then
+        readlink -f "${Target}"
+    else
+        while ( true ); do
+            cd $(dirname "${Target}")
+            Target=$(basename "${Target}")
+            [[ ! -L "${Target}" ]] && break
+            Target=$(readlink "${Target}")
+        done
+        echo $(pwd -P)/${Target}
+    fi
+}
+
+OGG_DISTFILE="$(getTargetFilename $1)"
 if [[ ! -f "${OGG_DISTFILE}" ]]; then
     echo "Oracle GoldenGate distribution ZIP file '$1' not found."
     exit 1
@@ -32,7 +47,7 @@ shift
 pushd "$(dirname $(command -v $0))" &>/dev/null
 
 function cleanupAndExit {
-    [[ "${OGG_DISTFILE}" != $(readlink -f "${OGG_TARFILE}") ]] && \
+    [[ "${OGG_DISTFILE}" != $(getTargetFilename "${OGG_TARFILE}") ]] && \
         rm -f "${OGG_TARFILE}" ggstar
     exit ${1-1}
 }
@@ -44,7 +59,7 @@ if [[ "${OGG_DISTFILE/.zip/}" != "${OGG_DISTFILE}" ]]; then
     [[ "${OGG_JARFILE}" != "" ]] && {
         OGG_TARFILE="$(basename ${OGG_DISTFILE} .zip).tar"
     } || {
-        OGG_TARFILE="$(unzip -o ${OGG_DISTFILE} *.tar | awk '/.*[.]tar/ { print $NF; exit 0 }')"
+        OGG_TARFILE="$(unzip -o ${OGG_DISTFILE} *.tar* 2>/dev/null | awk '/.*[.]tar/ { print $NF; exit 0 }')"
     }
 fi
 if [[ "${OGG_DISTFILE/.tgz/}" != "${OGG_DISTFILE}" ]]; then
@@ -54,7 +69,7 @@ if [[ "${OGG_DISTFILE/.tgz/}" != "${OGG_DISTFILE}" ]]; then
 fi
 if [[ "${OGG_DISTFILE/.tar/}" != "${OGG_DISTFILE}" ]]; then
     OGG_TARFILE="$(basename ${OGG_DISTFILE})"
-    if [[ "${OGG_DISTFILE}" != $(readlink -f "${OGG_TARFILE}") ]]; then
+    if [[ "${OGG_DISTFILE}" != $(getTargetFilename "${OGG_TARFILE}") ]]; then
         cp -a "${OGG_DISTFILE}" "${OGG_TARFILE}"
     fi
 fi
@@ -87,11 +102,12 @@ find    ggstar -type f \( -name '*.so*' -o -not -name '*.*' \) -exec chmod +x {}
 tar Ccf ggstar ${OGG_TARFILE} --owner=54321 --group=54321 .
 rm -fr  ggstar
 
-[[ ! -z "${BASE_IMAGE}" ]] && BASE_IMAGE_ARG="--build-arg BASE_IMAGE=${BASE_IMAGE}"
-[[ ! -z "${http_proxy}" ]] && HTTP_PROXY_ARG="--build-arg http_proxy=${http_proxy}"
+[[ ! -z "${BASE_IMAGE}"  ]] && BASE_IMAGE_ARG="--build-arg BASE_IMAGE=${BASE_IMAGE}"
+[[ ! -z "${http_proxy}"  ]] && HTTP_PROXY_ARG="--build-arg http_proxy=${http_proxy}"
+[[ ! -z "${https_proxy}" ]] && HTTPS_PROXY_ARG="--build-arg https_proxy=${https_proxy}"
 
 docker build ${BASE_IMAGE_ARG} \
-             ${HTTP_PROXY_ARG} \
+             ${HTTP_PROXY_ARG} ${HTTPS_PROXY_ARG} \
              --build-arg OGG_VERSION=${OGG_VERSION} \
              --build-arg OGG_EDITION=${OGG_EDITION} \
              --build-arg OGG_TARFILE=${OGG_TARFILE} \
